@@ -1,9 +1,13 @@
-import UserCard from "./CustomComponent";
+
+import  Layout from "./Layout";
 
 function App() {
-return(
-  
-  
-<UserCard/>)
+
+  return(
+  <>
+  <Layout/>
+
+</>)
+
 }
 export default App; 
