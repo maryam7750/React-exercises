@@ -1,4 +1,59 @@
-               ////  USERKA INPUT HASAMEEYO
+import { useEffect, useState } from "react";
+
+function App() {
+  const [Title, setTitle] = useState("HELLOW");
+  const [name, setName] = useState("amira");
+
+  useEffect(() => {
+    document.title = Title;
+    console.log(Title);
+  }, [Title]);
+  
+
+  return (
+    <div>
+      <h1>enter your name</h1>
+
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+  <h1>chooce Greatin</h1>
+
+      <input
+        type="text"
+        value={Title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+    </div>
+  );
+}
+
+export default App; 
+               
+               
+               
+               
+               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////  USERKA INPUT HASAMEEYO
 
 // const { useState } = require("react");
 
@@ -127,10 +182,10 @@
 
              // exercise5
 
-import ShoppingCart from "./ShoppingCart";
+// /import ShoppingCart from "./ShoppingCart";
 
-function App() {
-  return <ShoppingCart />;
-}
+// function App() {
+//   return <ShoppingCart />;
+// }
 
-export default App;
+// export default App;
