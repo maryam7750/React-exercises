@@ -1,36 +1,111 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-function App() {
-  const [Title, setTitle] = useState("HELLOW");
-  const [name, setName] = useState("amira");
+const MouseTracker = () => {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    document.title = Title;
-    console.log(Title);
-  }, [Title]);
-  
+    const handleMouseMove = (e) => {
+      setCoords({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  // }, []); one time run
 
   return (
     <div>
-      <h1>enter your name</h1>
-
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-  <h1>chooce Greatin</h1>
-
-      <input
-        type="text"
-        value={Title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <p>Mouse X: {coords.x}</p>
+      <p>Mouse Y: {coords.y}</p>
     </div>
   );
-}
+};
 
-export default App; 
+export default MouseTracker;
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useState } from "react"
+
+// function App() {
+//   const [x, y] = useState(MouseEvent.innerWidth)
+
+//   useEffect(() => {
+//     const handleResize = () => setWidth(window.innerWidth)
+
+//     window.addEventListener("resize", handleResize)
+
+//     return () => window.removeEventListener("resize", handleResize);
+
+//     return ()=>{
+//      window. removeEventListener("resize", handleResize)
+//     }
+//   }, [])
+
+//   return (
+//     <div>
+//       <p>window width: {Width}px</p>
+//     </div>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+
+// import { useEffect, useState } from "react";
+
+// function App() {
+//   const [Title, setTitle] = useState("HELLOW");
+//   const [name, setName] = useState("amira");
+
+//   useEffect(() => {
+//     document.title = Title;
+//     console.log(Title);
+//   }, [Title]);
+  
+
+//   return (
+//     <div>
+//       <h1>enter your name</h1>
+
+//       <input
+//         type="text"
+//         value={name}
+//         onChange={(e) => setName(e.target.value)}
+//       />
+//   <h1>chooce Greatin</h1>
+
+//       <input
+//         type="text"
+//         value={Title}
+//         onChange={(e) => setTitle(e.target.value)}
+//       />
+//     </div>
+//   );
+// }
+
+// export default App; 
                
                
                
