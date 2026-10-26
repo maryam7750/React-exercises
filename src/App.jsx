@@ -1,58 +1,105 @@
+
 import React, { useState, useEffect } from 'react';
 
-function App() {
-  const [time, setTime] = useState(0);
-  const [seconds, setSeconds] = useState('');
-  const [isRunning, setIsRunning] = useState(false);
+const UserList = () => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isRunning) return;
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const data = await response.json();
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        // Whether success or error, stop the loading state
+        setLoading(false);
+      }
+    };
 
-    const timeid = setInterval(() => {
-      setTime((prev) => {
-        if (prev <= 1) {
-          clearInterval(timeid);
-          setIsRunning(false);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    // Trigger the fetch when the component mounts
+    fetchUsers();
+  }, []); // Runs only once on mount
 
-    return () => clearInterval(timeid);
-  }, [isRunning]);
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
-      <h1>Countdown Timer</h1>
-      <label htmlFor="set-time">Enter seconds:</label>
-      <input
-        id="set-time"
-        type="number"
-        placeholder="Enter seconds"
-        value={seconds}
-        onChange={(e) => setSeconds(e.target.value)}
-      />
-      <label htmlFor="time-left">Time left: {time}</label>
-
-      <button onClick={() => {
-        if (Number(seconds) > 0) {
-          setTime(Number(seconds));
-          setIsRunning(true);
-        }
-      }}>Start</button>
-
-      <button onClick={() => setIsRunning(false)}>Stop</button>
-
-      <button onClick={() => {
-        setTime(0);
-        setIsRunning(false);
-      }}>Reset</button>
+      <h2>List of Users</h2>
+      <ul>
+        {users.map((u) => (
+          <li key={u.id}>{u.name}</li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
-export default App;
+export default UserList;
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// function App() {
+//   const [time, setTime] = useState(0);
+//   const [seconds, setSeconds] = useState('');
+//   const [isRunning, setIsRunning] = useState(false);
+
+//   useEffect(() => {
+//     if (!isRunning) return;
+
+//     const timeid = setInterval(() => {
+//       setTime((prev) => {
+//         if (prev <= 1) {
+//           clearInterval(timeid);
+//           setIsRunning(false);
+//           return 0;
+//         }
+//         return prev - 1;
+//       });
+//     }, 1000);
+
+//     return () => clearInterval(timeid);
+//   }, [isRunning]);
+
+//   return (
+//     <div>
+//       <h1>Countdown Timer</h1>
+//       <label htmlFor="set-time">Enter seconds:</label>
+//       <input
+//         id="set-time"
+//         type="number"
+//         placeholder="Enter seconds"
+//         value={seconds}
+//         onChange={(e) => setSeconds(e.target.value)}
+//       />
+//       <label htmlFor="time-left">Time left: {time}</label>
+
+//       <button onClick={() => {
+//         if (Number(seconds) > 0) {
+//           setTime(Number(seconds));
+//           setIsRunning(true);
+//         }
+//       }}>Start</button>
+
+//       <button onClick={() => setIsRunning(false)}>Stop</button>
+
+//       <button onClick={() => {
+//         setTime(0);
+//         setIsRunning(false);
+//       }}>Reset</button>
+//     </div>
+    
+//   );
+// }
+
+// export default App;
 
 
 
