@@ -1,30 +1,160 @@
 import React, { useState, useEffect } from 'react';
 
-const MouseTracker = () => {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
+function App() {
+  const [time, setTime] = useState(0);
+  const [seconds, setSeconds] = useState('');
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setCoords({ x: e.clientX, y: e.clientY });
-    };
+    if (!isRunning) return;
 
-    window.addEventListener('mousemove', handleMouseMove);
+    const timeid = setInterval(() => {
+      setTime((prev) => {
+        if (prev <= 1) {
+          clearInterval(timeid);
+          setIsRunning(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  // }, []); one time run
+    return () => clearInterval(timeid);
+  }, [isRunning]);
 
   return (
     <div>
-      <p>Mouse X: {coords.x}</p>
-      <p>Mouse Y: {coords.y}</p>
+      <h1>Countdown Timer</h1>
+      <label htmlFor="set-time">Enter seconds:</label>
+      <input
+        id="set-time"
+        type="number"
+        placeholder="Enter seconds"
+        value={seconds}
+        onChange={(e) => setSeconds(e.target.value)}
+      />
+      <label htmlFor="time-left">Time left: {time}</label>
+
+      <button onClick={() => {
+        if (Number(seconds) > 0) {
+          setTime(Number(seconds));
+          setIsRunning(true);
+        }
+      }}>Start</button>
+
+      <button onClick={() => setIsRunning(false)}>Stop</button>
+
+      <button onClick={() => {
+        setTime(0);
+        setIsRunning(false);
+      }}>Reset</button>
     </div>
   );
-};
+}
 
-export default MouseTracker;
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// function App() {
+//   const [time, setTime] = useState(0);
+//   const [isRunning, setIsRunning] = useState(false);
+
+//   useEffect(() => {
+//     if (!isRunning) return;
+
+//     const timeid = setInterval(() => {
+//       setTime((prev) => prev + 1);
+//     }, 1000);
+
+//     return () => clearInterval(timeid);
+//   }, [isRunning]);
+
+//   return (
+//     <div>
+//       <h1>{time}</h1>
+
+//       <button onClick={() => setIsRunning(true)}>Start</button>
+//       <button onClick={() => setIsRunning(false)}>Stop</button>
+//       <button onClick={() => setTime(0)}>Reset</button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// const MouseTracker = () => {
+//   const [coords, setCoords] = useState({ x: 0, y: 0 });
+
+//   useEffect(() => {
+//     const handleMouseMove = (e) => {
+//       setCoords({ x: e.clientX, y: e.clientY });
+//       c
+
+//     };
+
+//     window.addEventListener('mousemove', handleMouseMove);
+
+//     // Cleanup
+//     return () => {
+//       window.removeEventListener('mousemove', handleMouseMove);
+//     };
+//   }, []);
+
+//   return (
+//     <div>
+//       <p>Mouse X: {coords.x}</p>
+//       <p>Mouse Y: {coords.y}</p>
+//     </div>
+//   );
+// };
+
+// export default MouseTracker;
 
 
     
