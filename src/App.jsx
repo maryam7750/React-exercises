@@ -1,15 +1,20 @@
 
-import Counter from './Counter';
 
-const App = () => {
+
+import CounterWithReducer from './counterWithReducer';
+
+function App() {
   return (
     <div>
-      <Counter />
+      <CounterWithReducer />
     </div>
   );
-};
+}
 
 export default App;
+
+
+
 
 
 
