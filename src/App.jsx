@@ -1,16 +1,112 @@
-import customHook from "./customHook";
+import { useState } from "react";
+import styles from "./App.module.css";
+
 function App() {
+  const [todo, setTodo] = useState("");
+  const [todos, setTodos] = useState([
+    { id: 1, text: "hey whatsapp", completed: false },
+    { id: 2, text: "how are yu doing", completed: true },
+    { id: 3, text: "This is cool right ?", completed: false },
+  ]);
+
+  const addTodo = () => {
+    if (todo.trim() === "") return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: todo,
+      completed: false,
+    };
+
+    setTodos([...todos, newTodo]);
+    setTodo("");
+  };
+
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map((item) =>
+        item.id === id
+          ? { ...item, completed: !item.completed }
+          : item
+      )
+    );
+  };
+
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
+  };
+
   return (
-    <>
-   <div>customHook</div>
-   <ContactForm />
-    </>
+    <div className={styles.container}>
+      <div className={styles.todoCard}>
+        <h1 className={styles.title}>My Todo List</h1>
+
+        <div className={styles.inputGroup}>
+          <input
+            type="text"
+            placeholder="Add a new todo..."
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") addTodo();
+            }}
+          />
+
+          <button onClick={addTodo} className={styles.addButton}>
+            Add
+          </button>
+        </div>
+
+        <div className={styles.todoList}>
+          {todos.map((item) => (
+            <div key={item.id} className={styles.todoItem}>
+              <label className={styles.todoLabel}>
+                <input
+                  type="checkbox"
+                  checked={item.completed}
+                  onChange={() => toggleTodo(item.id)}
+                />
+
+                <span
+                  className={
+                    item.completed ? styles.completed : styles.todoText
+                  }
+                >
+                  {item.text}
+                </span>
+              </label>
+
+              {item.completed && (
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => deleteTodo(item.id)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
-}export default App;
+}
+
+export default App;
 
 
 
 
+
+// import customHook from "./customHook";
+// function App() {
+//   return (
+//     <>
+//    <div>customHook</div>
+//    <ContactForm />
+//     </>
+//   );
+// }export default App;
 
 
 

@@ -1,0 +1,148 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eae6ff;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.todoCard {
+  width: 100%;
+  max-width: 530px;
+  background: white;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #111827;
+  margin: 0 0 40px;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.inputGroup input {
+  flex: 1;
+  min-width: 0;
+  padding: 15px 18px;
+  border: 2px solid #e5e5e5;
+  border-radius: 12px;
+  font-size: 17px;
+  outline: none;
+}
+
+.inputGroup input:focus {
+  border-color: #9000f5;
+}
+
+.addButton {
+  background: #9000f5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0 28px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.addButton:hover {
+  background: #7200c7;
+}
+
+.todoList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 60px;
+  padding: 10px 15px;
+  background: #f7f8fa;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.todoLabel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.todoLabel input {
+  width: 24px;
+  height: 24px;
+  accent-color: #1877f2;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todoText {
+  font-size: 18px;
+  color: #252525;
+  overflow-wrap: anywhere;
+}
+
+.completed {
+  font-size: 18px;
+  color: #888;
+  text-decoration: line-through;
+  overflow-wrap: anywhere;
+}
+
+.deleteButton {
+  border: none;
+  background: transparent;
+  color: #d62828;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: #a00000;
+}
+
+@media (max-width: 500px) {
+  .todoCard {
+    padding: 25px 18px;
+  }
+
+  .title {
+    font-size: 29px;
+  }
+
+  .inputGroup input {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .addButton {
+    padding: 0 18px;
+  }
+
+  .todoText,
+  .completed {
+    font-size: 15px;
+  }
+}
