@@ -1,98 +1,224 @@
 import { useState } from "react";
-import styles from "./App.module.css";
 
 function App() {
-  const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([
-    { id: 1, text: "hey whatsapp", completed: false },
-    { id: 2, text: "how are yu doing", completed: true },
-    { id: 3, text: "This is cool right ?", completed: false },
-  ]);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    gender: "",
+    agree: false,
+  });
 
-  const addTodo = () => {
-    if (todo.trim() === "") return;
+  const [submittedData, setSubmittedData] = useState(null);
 
-    const newTodo = {
-      id: Date.now(),
-      text: todo,
-      completed: false,
-    };
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
 
-    setTodos([...todos, newTodo]);
-    setTodo("");
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
-  const toggleTodo = (id) => {
-    setTodos(
-      todos.map((item) =>
-        item.id === id
-          ? { ...item, completed: !item.completed }
-          : item
-      )
-    );
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((item) => item.id !== id));
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmittedData(formData);
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.todoCard}>
-        <h1 className={styles.title}>My Todo List</h1>
+    <div>
+      <h1>Registration Form</h1>
 
-        <div className={styles.inputGroup}>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+
+        <br /><br />
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <br /><br />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <br /><br />
+
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Gender</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+
+        <br /><br />
+
+        <label>
           <input
-            type="text"
-            placeholder="Add a new todo..."
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") addTodo();
-            }}
+            type="checkbox"
+            name="agree"
+            checked={formData.agree}
+            onChange={handleChange}
           />
+          I agree to the terms and conditions
+        </label>
 
-          <button onClick={addTodo} className={styles.addButton}>
-            Add
-          </button>
+        <br /><br />
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {submittedData && (
+        <div>
+          <h2>Submitted Information</h2>
+          <p>Username: {submittedData.username}</p>
+          <p>Email: {submittedData.email}</p>
+          <p>Password: {submittedData.password}</p>
+          <p>Gender: {submittedData.gender}</p>
+          <p>Agreed: {submittedData.agree ? "Yes" : "No"}</p>
         </div>
-
-        <div className={styles.todoList}>
-          {todos.map((item) => (
-            <div key={item.id} className={styles.todoItem}>
-              <label className={styles.todoLabel}>
-                <input
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={() => toggleTodo(item.id)}
-                />
-
-                <span
-                  className={
-                    item.completed ? styles.completed : styles.todoText
-                  }
-                >
-                  {item.text}
-                </span>
-              </label>
-
-              {item.completed && (
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => deleteTodo(item.id)}
-                >
-                  Delete
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useState } from "react";
+// import styles from "./App.module.css";
+
+// function App() {
+//   const [todo, setTodo] = useState("");
+//   const [todos, setTodos] = useState([
+//     { id: 1, text: "hey whatsapp", completed: false },
+//     { id: 2, text: "how are yu doing", completed: true },
+//     { id: 3, text: "This is cool right ?", completed: false },
+//   ]);
+
+//   const addTodo = () => {
+//     if (todo.trim() === "") return;
+
+//     const newTodo = {
+//       id: Date.now(),
+//       text: todo,
+//       completed: false,
+//     };
+
+//     setTodos([...todos, newTodo]);
+//     setTodo("");
+//   };
+
+//   const toggleTodo = (id) => {
+//     setTodos(
+//       todos.map((item) =>
+//         item.id === id
+//           ? { ...item, completed: !item.completed }
+//           : item
+//       )
+//     );
+//   };
+
+//   const deleteTodo = (id) => {
+//     setTodos(todos.filter((item) => item.id !== id));
+//   };
+
+//   return (
+//     <div className={styles.container}>
+//       <div className={styles.todoCard}>
+//         <h1 className={styles.title}>My Todo List</h1>
+
+//         <div className={styles.inputGroup}>
+//           <input
+//             type="text"
+//             placeholder="Add a new todo..."
+//             value={todo}
+//             onChange={(e) => setTodo(e.target.value)}
+//             onKeyDown={(e) => {
+//               if (e.key === "Enter") addTodo();
+//             }}
+//           />
+
+//           <button onClick={addTodo} className={styles.addButton}>
+//             Add
+//           </button>
+//         </div>
+
+//         <div className={styles.todoList}>
+//           {todos.map((item) => (
+//             <div key={item.id} className={styles.todoItem}>
+//               <label className={styles.todoLabel}>
+//                 <input
+//                   type="checkbox"
+//                   checked={item.completed}
+//                   onChange={() => toggleTodo(item.id)}
+//                 />
+
+//                 <span
+//                   className={
+//                     item.completed ? styles.completed : styles.todoText
+//                   }
+//                 >
+//                   {item.text}
+//                 </span>
+//               </label>
+
+//               {item.completed && (
+//                 <button
+//                   className={styles.deleteButton}
+//                   onClick={() => deleteTodo(item.id)}
+//                 >
+//                   Delete
+//                 </button>
+//               )}
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
 
 
 
